@@ -10,8 +10,8 @@ const userSchema = new Schema({
         lastName: String
 })
 
-const userModel = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
 
 module.exports = {
-    userModel
+    User
 }
