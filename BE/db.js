@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-mongoose.connect("mongodb://localhost:27017/paytm");
+//console.log(`${process.env.MONGODB_URL}`);
+
+mongoose.connect(`${process.env.MONGODB_URL}`);
 
 const userSchema = new Schema({
         email: {type: String, unique: true},

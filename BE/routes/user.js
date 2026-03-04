@@ -1,13 +1,13 @@
 const { Router } = require("express");
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
-const { User } = require("../db");
+const { User, Account } = require("../db");
 const { JWT_SECRETE } = require("../config");
 const { authMiddleware } = require("../middleware");
 const userRouter = Router();
 
 const signupSchema = zod.object({
-    emial: zod.string().email(),
+    email: zod.string().email(),
     password: zod.string(),
     firstName: zod.string(),
     lastName: zod.string()
@@ -35,6 +35,12 @@ userRouter.post("/signup", async (req, res, next) => {
 
     const dbUser = await User.create(body);
 
+    // Generating a random amount for the user from 1 to 1000
+    await Account.create({
+        userId: dbUser._id,
+        balance: parseFloat((1 + Math.random() * 1000).toFixed(2))
+    })
+
     const token = jwt.sign({
         userId: dbUser._id
     }, JWT_SECRETE)
@@ -46,7 +52,7 @@ userRouter.post("/signup", async (req, res, next) => {
 })
 
 userRouter.post("/signin", async (req, res) => {
-    const { safeParse } = signupSchema.safeParse(req.body);
+    const { success } = signupSchema.safeParse(req.body);
     if(!success){
         return res.status(411).json({
             message: "Emaily is already taken try new things"
@@ -82,17 +88,20 @@ const updateBody = zod.object({
 })
 
 
-userRouter.put("/", authMiddleware, async (req, res) => {
-    const { success } = updateBody.safeParse(user.body);
+userRouter.put("/update", authMiddleware, async (req, res) => {
+    const { success } = updateBody.safeParse(req.body);
     if(!success){
         return res.status(411).json({
             message: "Emaily is already taken try new things"
         })
     }
 
-    await User.updateOne(req.body, {
-        id: req.userId
-    })
+    await User.updateOne(
+        {
+            _id: req.userId
+        }, {
+            $set: req.body
+        })
 
     res.json({
         message: "Updated Succefully"
