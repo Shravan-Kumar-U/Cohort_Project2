@@ -3,10 +3,10 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { Signup } from "./pages/Signup";
-import { Signin } from "./pages/Signin";
-import { Dashboard } from "./pages/Dashboard";
-import { SendMoney } from "./pages/SendMoney";
+import { Signup } from "./assets/pages/Signup";
+import { Signin } from "./assets/pages/Signin";
+import { Dashboard } from "./assets/pages/Dashboard";
+import { SendMoney } from "./assets/pages/SendMoney";
 
 function App() {
   return (
