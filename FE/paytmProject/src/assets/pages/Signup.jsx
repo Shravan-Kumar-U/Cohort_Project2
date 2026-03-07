@@ -42,8 +42,8 @@ export const Signup = () => {
         }} 
          placeholder="123456" label={"Password"} />
         <div className="pt-4">
-          <Button onClick={() => {
-            const response = axios.post("http://localhost:3000/api/v1/user/signup", {
+          <Button onClick={ async () => {
+            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
               firstName,
               lastName,
               email,

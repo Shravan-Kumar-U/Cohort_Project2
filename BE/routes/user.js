@@ -126,12 +126,14 @@ userRouter.get("/bulk", async(req, res) => {
             }
         ]
     }) 
-
+    //console.log(users);
+    
     res.json({
         user: users.map(user => ({
             email: user.email,
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            id: user._id
         }))
     })
 })
