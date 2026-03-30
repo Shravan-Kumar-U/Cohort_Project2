@@ -51,8 +51,16 @@ userRouter.post("/signup", async (req, res, next) => {
     })
 })
 
+const signinSchema = zod.object({
+    email: zod.string().email(),
+    password: zod.string()
+})
+
+
 userRouter.post("/signin", async (req, res) => {
     const { success } = signupSchema.safeParse(req.body);
+    console.log(success);
+    
     if(!success){
         return res.status(411).json({
             message: "Emaily is already taken try new things"
