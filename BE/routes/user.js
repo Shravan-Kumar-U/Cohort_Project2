@@ -58,7 +58,7 @@ const signinSchema = zod.object({
 
 
 userRouter.post("/signin", async (req, res) => {
-    const { success } = signupSchema.safeParse(req.body);
+    const { success } = signinSchema.safeParse(req.body);
     console.log(success);
     
     if(!success){
