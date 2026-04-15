@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-//console.log(`${process.env.MONGODB_URL}`);
+console.log(`${process.env.MONGODB_URL}`);
 
 mongoose.connect(`${process.env.MONGODB_URL}`);
 

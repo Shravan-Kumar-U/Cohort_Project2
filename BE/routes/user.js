@@ -58,8 +58,9 @@ const signinSchema = zod.object({
 
 
 userRouter.post("/signin", async (req, res) => {
+    const body = req.body
     const { success } = signinSchema.safeParse(req.body);
-    console.log(success);
+    //console.log(body);
     
     if(!success){
         return res.status(411).json({
@@ -68,9 +69,11 @@ userRouter.post("/signin", async (req, res) => {
     }
 
     const user = await User.findOne({
-        email: req.body.email,
-        password: req.body.password
+        email: body.email,
+        password: body.password
     })
+    //console.log(user);
+    
 
     if(user){
         const token = jwt.sign({
@@ -119,10 +122,11 @@ userRouter.put("/update", authMiddleware, async (req, res) => {
 //select * from user where ename is like = '%shra%'
 // Similarly if i want to do this operation in MongoDB then follow the below syntax
 
-userRouter.get("/bulk", async(req, res) => {
+userRouter.get("/bulk", authMiddleware, async(req, res) => {
     const filter = req.query.filter || '';
     
     const users = await User.find({
+        _id: {$ne: req.userId},
         $or:[{
                 firstName: {
                     "$regex": filter
