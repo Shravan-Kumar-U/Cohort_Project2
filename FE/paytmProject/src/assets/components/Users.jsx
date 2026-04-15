@@ -8,9 +8,16 @@ export const Users = () => {
     // Replace with backend call
     const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState("");
-
+    const [currentUser, setCurrentUser] = useState("");
+    //console.log(localStorage.getItem("token"));
+    
+    console.log(users);
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token")
+             }
+        })
             .then(response => {
                 setUsers(response.data.user)
             })

@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 export const SendMoney = () => {
     
     const [amount, setAmount] = useState(0);
+    //const[totalAmount, setTotalAmount] = useState(0);
     const [searchParams] = useSearchParams();
     //console.log(searchParams);
     const id = searchParams.get("id");
@@ -36,7 +37,7 @@ export const SendMoney = () => {
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         for="amount"
                     >
-                        Amount (in Rs)
+                        Amount : ()
                     </label>
                     <input
                         onChange={(e) => {
